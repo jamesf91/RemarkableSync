@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Application = Microsoft.Office.Interop.OneNote.Application;
+using Microsoft.Office.Interop.OneNote;
+using OneNoteObjectModel;
 
 namespace RemarkableSync.OnenoteAddin
 {
@@ -64,12 +66,26 @@ namespace RemarkableSync.OnenoteAddin
 
         public class RmTreeNode : TreeNode
         {
+            private List<int> _selectedPages;
             public RmTreeNode(string id, string visibleName, bool isCollection)
             {
                 Text = (isCollection ? "\xD83D\xDCC1" : "\xD83D\xDCC4") + " " + visibleName;
                 ID = id;
                 VisibleName = visibleName;
                 IsCollection = isCollection;
+            }
+
+            public void SetSelectedPages(List<int> selectedPages = null)
+            {
+                _selectedPages = selectedPages;
+            }
+
+            public bool HasPageSelection { 
+                get{return (_selectedPages == null);} 
+            }
+            public List<int> SelectedPages
+            {
+                get { return _selectedPages;}
             }
 
             public string ID { get; set; }
@@ -93,7 +109,7 @@ namespace RemarkableSync.OnenoteAddin
         }
 
         private IRmDataSource _rmDataSource;
-        private Application _application;
+        private OneNoteHelper _application;
         private IConfigStore _configStore;
         private string _settingsRegPath;
         private CancellationTokenSource _cancellationSource;
@@ -107,7 +123,7 @@ namespace RemarkableSync.OnenoteAddin
         {
             _settingsRegPath = settingsRegPath;
             _configStore = new WinRegistryConfigStore(_settingsRegPath);
-            _application = application;
+            _application = new OneNoteHelper(application);
             _cancellationSource = new CancellationTokenSource();
 
             InitializeComponent();
@@ -119,9 +135,6 @@ namespace RemarkableSync.OnenoteAddin
             InitializeConfigs();
             rmTreeView.Nodes.Clear();
             lblInfo.Text = "Loading document list from reMarkable...";
-
-            //todo: to early to enable
-            //rmTreeView.AfterSelect += RmTreeView_AfterSelect;
 
             List<RmItem> rootItems = new List<RmItem>();
 
@@ -137,7 +150,7 @@ namespace RemarkableSync.OnenoteAddin
                     }
                     catch (Exception err)
                     {
-                        Logger.Error($"Failed to get RmConnectionMethod config with err: {err.Message}");
+                        Logger.Error(err, $"Failed to get RmConnectionMethod config with err: {err.Message}");
                         // will default to cloud
                     }
 
@@ -163,6 +176,7 @@ namespace RemarkableSync.OnenoteAddin
 
                 Logger.Debug("Got item hierarchy from remarkable cloud");
                 var treeNodeList = RmTreeNode.FromRmItem(RmItem.SortItems(rootItems));
+                
 
                 rmTreeView.Nodes.AddRange(treeNodeList.ToArray());
                 Logger.Debug("Added nodes to tree view");
@@ -170,7 +184,7 @@ namespace RemarkableSync.OnenoteAddin
             }
             catch (Exception err)
             {
-                Logger.Error($"Error getting notebook structure from reMarkable. Err: {err.Message}");
+                Logger.Error(err, $"Error getting notebook structure from reMarkable. Err: {err.Message}");
                 MessageBox.Show($"Error getting notebook structure from reMarkable.\n{err.Message}", "Error");
                 Close();
                 return;
@@ -178,10 +192,11 @@ namespace RemarkableSync.OnenoteAddin
             return;
         }
 
-        private async void RmTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        private async Task<List<int>> GetPageSelection()
         {
             CancellationToken t = new CancellationToken();
             RmTreeNode rmTreeNode = (RmTreeNode)rmTreeView.SelectedNode;
+            List<int> selectedPages = new List<int>();
             if (!rmTreeNode.IsCollection)
             {
                 Progress<string> progress = new Progress<string>((string updateText) =>
@@ -190,16 +205,26 @@ namespace RemarkableSync.OnenoteAddin
                 });
                 using (RmDocument doc = await _rmDataSource.DownloadDocument(rmTreeNode.ID, t, progress))
                 {
-                    PreviewForm previewForm = new PreviewForm(doc.GetPagesAsImage());
+                    var images = doc.GetPagesAsImage();
+                    Dictionary<int, Bitmap> pages = new Dictionary<int, Bitmap>();
+                    for (int i = 0; i < images.Count; i++)
+                    {
+                        selectedPages.Add(i);
+                        pages.Add(i, images[i]);
+                    }
+                    PreviewForm previewForm = new PreviewForm(pages);
+
                     DialogResult result = previewForm.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        List<int> selectedBitmaps = previewForm.SelectedBitmaps;
+                        //List<int> selectedBitmaps = previewForm.SelectedBitmaps;
                         // do something with the selected bitmaps
+                        selectedPages = previewForm.SelectedBitmaps;
                         Logger.Debug("Selection received");
                     }
                 }
             }
+            return selectedPages;
         }
 
         private void InitializeConfigs()
@@ -267,24 +292,19 @@ namespace RemarkableSync.OnenoteAddin
                 MessageBox.Show(this, "No document selected.");
                 return;
             }
-
             RmTreeNode rmTreeNode = (RmTreeNode)rmTreeView.SelectedNode;
+
+            if (!rmTreeNode.IsCollection && cbSelectPage.Checked)
+            {
+                rmTreeNode.SetSelectedPages(await GetPageSelection());
+            }else
+            {
+                rmTreeNode.SetSelectedPages();
+            }
+
+            
             double zoom = (double)numericGraphicWidth.Value;
             Logger.Debug($"Selected: {rmTreeNode.VisibleName} | {rmTreeNode.ID}");
-
-            ImportMode mode = ImportMode.Unknown;
-            if (radioBtnImportText.Checked)
-            {
-                mode = ImportMode.Text;
-            }
-            else if (radioBtnImportGraphics.Checked)
-            {
-                mode = ImportMode.Graphics;
-            }
-            else if (radioBtnImportBoth.Checked)
-            {
-                mode = ImportMode.Both;
-            }
 
             string language = "en_US";
             if (cboLanguage.SelectedItem != null)
@@ -294,7 +314,7 @@ namespace RemarkableSync.OnenoteAddin
 
             try
             {
-                bool success = await ImportSelection(rmTreeNode, mode, zoom, language);
+                bool success = await ImportSelection(rmTreeNode, zoom, language);
                 Logger.Debug("Import " + (success ? "successful" : "failed"));
                 if (success)
                 {
@@ -303,7 +323,7 @@ namespace RemarkableSync.OnenoteAddin
             }
             catch (Exception err)
             {
-                Logger.Error($"Error importing document from reMarkable. Err: {err.Message}");
+                Logger.Error(err, $"Error importing document from reMarkable. Err: {err.Message}");
                 MessageBox.Show($"Error importing document from reMarkable.\n{err.Message}", "Error");
                 Close();
                 return;
@@ -311,7 +331,7 @@ namespace RemarkableSync.OnenoteAddin
         }
 
 
-        private async Task<bool> ImportSelection(RmTreeNode rmTreeNode, ImportMode mode, double zoom = 50.0, string language = "en_US")
+        private async Task<bool> ImportSelection(RmTreeNode rmTreeNode, double zoom = 50.0, string language = "en_US")
         {
             Logger.Debug($"Saving settings: zoom: {zoom}, language: {language}");
             Dictionary<string, string> configs = new Dictionary<string, string>();
@@ -341,7 +361,7 @@ namespace RemarkableSync.OnenoteAddin
                         Logger.Debug($"Aborting import of multiple documents as cancellation is requested");
                         break;
                     }
-                    if (!await ImportDocument(item, mode, zoom, language))
+                    if (!await ImportDocument(item, zoom, language))
                     {
                         lblInfo.Text = $"Downloading \"{item.VissibleName}\"...  Failed.\n Import stopped";
                     }
@@ -358,7 +378,7 @@ namespace RemarkableSync.OnenoteAddin
                     VissibleName = rmTreeNode.VisibleName
                 };
 
-                return await ImportDocument(item, mode, zoom, language);
+                return await ImportDocument(item, zoom, language, rmTreeNode.SelectedPages);
             }
         }
 
@@ -382,7 +402,7 @@ namespace RemarkableSync.OnenoteAddin
             }
         }
 
-        private async Task<bool> ImportDocument(RmItem item, ImportMode mode, double zoom, string language)
+        private async Task<bool> ImportDocument(RmItem item, double zoom, string language, List<int> selectedPages = null)
         {
             Logger.Debug($"importing {item.VissibleName}, id: {item.ID}");
             List<PageBinary> pages = new List<PageBinary>();
@@ -397,29 +417,32 @@ namespace RemarkableSync.OnenoteAddin
             using (RmDocument doc = await _rmDataSource.DownloadDocument(item.ID, _cancellationSource.Token, progress))
             {
                 Logger.Debug("document downloaded");
-                switch (mode)
+                bool result = false;
+
+                if (cbText.Checked)
                 {
-                    case ImportMode.Text:
-                        return await ImportContentAsText(doc, item.VissibleName, language);
-                    case ImportMode.Graphics:
-                        return ImportContentAsGraphics(doc, item.VissibleName, zoom);
-                    case ImportMode.Both:
-                        return await ImportContentAsBoth(doc, item.VissibleName, zoom, language);
-                    default:
-                        Logger.Error($"ImportDocument() - unknown import mode: {mode}");
-                        break;
+                    result = await ImportContentAsText(doc, item.VissibleName, language, selectedPages);
+                    if(!result) return false;
                 }
+                if (cbImage.Checked)
+                {
+                    result = ImportContentAsGraphics(doc, item.VissibleName, zoom, selectedPages);
+                    if (!result) return false;
+                }
+                if (cbShape.Checked)
+                {
+                    result = ImportContentAsShape(doc, item.VissibleName, zoom, selectedPages);
+                    if (!result) return false;
+                }
+                return result;
             }
-
-
-            return true;
         }
 
-        private async Task<bool> ImportContentAsText(RmDocument doc, string visibleName, string language)
+        private async Task<bool> ImportContentAsText(RmDocument doc, string visibleName, string language, List<int> selectedPages = null)
         {
             lblInfo.Text = $"Digitising {visibleName}...";
 
-            List<string> results = await GetHwrResultAsync(doc, language);
+            List<string> results = await GetHwrResultAsync(doc, language, selectedPages);
             if (results != null)
             {
                 UpdateOneNoteWithHwrResult(visibleName, results);
@@ -437,7 +460,7 @@ namespace RemarkableSync.OnenoteAddin
             return true;
         }
 
-        private async Task<List<string>> GetHwrResultAsync(RmDocument doc, string language)
+        private async Task<List<string>> GetHwrResultAsync(RmDocument doc, string language, List<int> selectedPages = null)
         {
             Logger.Debug($"GetHwrResultAsync() - requesting hand writing recognition for {doc.PageCount} pages");
             MyScriptClient hwrClient = new MyScriptClient(_configStore);
@@ -445,7 +468,11 @@ namespace RemarkableSync.OnenoteAddin
             var hwrTasks = new List<Task<Tuple<int, string>>>();
             for (var i = 0; i < doc.PageCount; i++)
             {
-                hwrTasks.Add(hwrClient.RequestHwr(doc, i, language));
+                if (selectedPages == null || selectedPages.Contains(i))
+                {
+                    hwrTasks.Add(hwrClient.RequestHwr(doc, i, language));
+                }
+                
             }
 
             var al = await Task.WhenAll(hwrTasks);
@@ -458,23 +485,51 @@ namespace RemarkableSync.OnenoteAddin
 
         private void UpdateOneNoteWithHwrResult(string name, List<string> result)
         {
-            OneNoteHelper oneNoteHelper = new OneNoteHelper(_application);
-            string currentSectionId = oneNoteHelper.GetCurrentSectionId();
-            string newPageId = oneNoteHelper.CreatePage(currentSectionId, name);
+            OneNoteObjectModel.Page page = _application.AddPageAfterCurrent(name);
             foreach (string content in result)
             {
-                oneNoteHelper.AddPageContent(newPageId, content);
+                _application.AddPageContent(page.ID, content);
             }
         }
 
-        private bool ImportContentAsGraphics(RmDocument doc, string visibleName, double zoom)
+        private bool ImportContentAsGraphics(RmDocument doc, string visibleName, double zoom, List<int> selectedPages = null)
         {
             lblInfo.Text = $"Importing {visibleName} as graphics...";
-            OneNoteHelper oneNoteHelper = new OneNoteHelper(_application);
-            string currentSectionId = oneNoteHelper.GetCurrentSectionId();
-            string newPageId = oneNoteHelper.CreatePage(currentSectionId, visibleName);
+            OneNoteObjectModel.Page newPage = _application.AddPageAfterCurrent(visibleName);
 
-            oneNoteHelper.AppendPageImages(newPageId, doc.GetPagesAsImage(), zoom);
+            List<Bitmap> bitmaps = new List<Bitmap>();
+            for (var i = 0; i < doc.PageCount; i++)
+            {
+                if (selectedPages == null || selectedPages.Contains(i))
+                {
+                    bitmaps.Add(doc.GetPageAsImage(i));
+                }
+
+            }
+
+            _application.AppendPageImages(newPage.ID, bitmaps, zoom);
+
+            lblInfo.Text = $"Imported {visibleName} successfully.";
+            Task.Run(() =>
+            {
+                Thread.Sleep(500);
+            }).Wait();
+            return true;
+        }
+
+
+        private bool ImportContentAsShape(RmDocument doc, string visibleName, double zoom, List<int> selectedPages = null)
+        {
+            lblInfo.Text = $"Importing {visibleName} as graphics...";
+            OneNoteObjectModel.Page newPage = _application.AddPageAfterCurrent(visibleName);
+
+            for (var i = 0; i < doc.PageCount; i++)
+            {
+                if (selectedPages == null || selectedPages.Contains(i))
+                {
+                    _application.AppendPageShapeFromMyScriptRequest(newPage.ID, doc.GetPageAsMyScriptHwrRequestBundle(i, "en-GB"), zoom);
+                }
+            }
 
             lblInfo.Text = $"Imported {visibleName} successfully.";
             Task.Run(() =>
@@ -517,13 +572,11 @@ namespace RemarkableSync.OnenoteAddin
 
         private void UpdateOneNoteWithHwrResultAndGraphics(string name, List<Tuple<string, Bitmap>> result, double zoom)
         {
-            OneNoteHelper oneNoteHelper = new OneNoteHelper(_application);
-            string currentSectionId = oneNoteHelper.GetCurrentSectionId();
-            string newPageId = oneNoteHelper.CreatePage(currentSectionId, name);
+            OneNoteObjectModel.Page newPage = _application.AddPageAfterCurrent(name);
             foreach (var pageResult in result)
             {
-                oneNoteHelper.AddPageContent(newPageId, pageResult.Item1);
-                oneNoteHelper.AppendPageImage(newPageId, pageResult.Item2, zoom);
+                _application.AddPageContent(newPage.ID, pageResult.Item1);
+                _application.AppendPageImage(newPage.ID, pageResult.Item2, zoom);
             }
         }
 
@@ -531,6 +584,15 @@ namespace RemarkableSync.OnenoteAddin
         {
             _cancellationSource.Cancel();
             _rmDataSource?.Dispose();
+        }
+
+        private void btnSelectPages_Click(object sender, EventArgs e)
+        {
+            if(!cbSelectPage.Checked)
+            {
+                cbSelectPage.Checked = true;
+            }
+            btnOk_Click(sender, e);
         }
     }
 }

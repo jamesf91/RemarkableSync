@@ -44,7 +44,8 @@ namespace RemarkableSync
             public string name { get; set; }
         }
 
-        public RmDocument(string id) : this(id, Path.Combine(Path.GetTempPath(), id)) { }
+        //could be same as doctree
+        public RmDocument(string id) : this(id, Path.Combine(Path.GetTempPath(), "RemarkableSync", id)) { }
 
         public RmDocument(string id, string root_path)
         {
@@ -68,7 +69,7 @@ namespace RemarkableSync
                 }
                 _content = DocumentContent.GetDocumentContentFromJson(docContentJsonString);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw new Exception($"Unsupported format");
             }
@@ -147,7 +148,8 @@ namespace RemarkableSync
             {
                 try
                 {
-                    Directory.Delete(_root_path, true);
+                    //TODO: how shall we cache?
+                    //Directory.Delete(_root_path, true);
                 }
                 catch (Exception err)
                 {
@@ -170,6 +172,11 @@ namespace RemarkableSync
         protected string GetDocumentContentFilePath()
         {
             return Path.Combine(_root_path, $"{_id}.content");
+        }
+
+        protected string GetDocumentMetadataFilePath()
+        {
+            return Path.Combine(_root_path, $"{_id}.metadata");
         }
 
         protected string GetPageBinaryFilePath(int pageNumber)

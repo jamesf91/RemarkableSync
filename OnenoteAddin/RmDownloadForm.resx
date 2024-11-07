@@ -136,13 +136,13 @@
     <value>Microsoft Sans Serif, 12pt</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>327, 642</value>
+    <value>246, 523</value>
   </data>
   <data name="btnCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>13, 6, 13, 6</value>
+    <value>10, 5, 10, 5</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>289, 42</value>
+    <value>216, 33</value>
   </data>
   <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -172,13 +172,13 @@
     <value>Microsoft Sans Serif, 11.25pt</value>
   </data>
   <data name="lblInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 406</value>
+    <value>10, 331</value>
   </data>
   <data name="lblInfo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>13, 12, 13, 12</value>
+    <value>10, 10, 10, 10</value>
   </data>
   <data name="lblInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>603, 73</value>
+    <value>452, 59</value>
   </data>
   <data name="lblInfo.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -195,45 +195,6 @@
   <data name="&gt;&gt;lblInfo.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="btnOk.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="btnOk.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="btnOk.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
-  </data>
-  <data name="btnOk.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt</value>
-  </data>
-  <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 642</value>
-  </data>
-  <data name="btnOk.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>13, 6, 13, 6</value>
-  </data>
-  <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>288, 42</value>
-  </data>
-  <data name="btnOk.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="btnOk.Text" xml:space="preserve">
-    <value>Ok</value>
-  </data>
-  <data name="&gt;&gt;btnOk.Name" xml:space="preserve">
-    <value>btnOk</value>
-  </data>
-  <data name="&gt;&gt;btnOk.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnOk.Parent" xml:space="preserve">
-    <value>tableLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;btnOk.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="rmTreeView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -241,13 +202,13 @@
     <value>Microsoft Sans Serif, 11.25pt</value>
   </data>
   <data name="rmTreeView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 12</value>
+    <value>10, 10</value>
   </data>
   <data name="rmTreeView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>13, 12, 13, 12</value>
+    <value>10, 10, 10, 10</value>
   </data>
   <data name="rmTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>603, 370</value>
+    <value>452, 301</value>
   </data>
   <data name="rmTreeView.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -262,10 +223,52 @@
     <value>tableLayoutPanel</value>
   </data>
   <data name="&gt;&gt;rmTreeView.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="tableLayoutGraphicWidth.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
+  </data>
+  <data name="lblSelectPage.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblSelectPage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lblSelectPage.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="lblSelectPage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblSelectPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 75</value>
+  </data>
+  <data name="lblSelectPage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 5, 3, 3</value>
+  </data>
+  <data name="lblSelectPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 22</value>
+  </data>
+  <data name="lblSelectPage.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="lblSelectPage.Text" xml:space="preserve">
+    <value>Select pages:</value>
+  </data>
+  <data name="lblSelectPage.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;lblSelectPage.Name" xml:space="preserve">
+    <value>lblSelectPage</value>
+  </data>
+  <data name="&gt;&gt;lblSelectPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblSelectPage.Parent" xml:space="preserve">
+    <value>tableLayoutGraphicWidth</value>
+  </data>
+  <data name="&gt;&gt;lblSelectPage.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="lblGraphicWidth.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -277,13 +280,13 @@
     <value>Microsoft Sans Serif, 9.75pt</value>
   </data>
   <data name="lblGraphicWidth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 6</value>
+    <value>3, 5</value>
   </data>
   <data name="lblGraphicWidth.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 6, 4, 0</value>
+    <value>3, 5, 3, 0</value>
   </data>
   <data name="lblGraphicWidth.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 37</value>
+    <value>94, 30</value>
   </data>
   <data name="lblGraphicWidth.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -304,19 +307,19 @@
     <value>tableLayoutGraphicWidth</value>
   </data>
   <data name="&gt;&gt;lblGraphicWidth.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="numericGraphicWidth.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="numericGraphicWidth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 6</value>
+    <value>103, 5</value>
   </data>
   <data name="numericGraphicWidth.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 6, 4, 4</value>
+    <value>3, 5, 3, 3</value>
   </data>
   <data name="numericGraphicWidth.Size" type="System.Drawing.Size, System.Drawing">
-    <value>92, 22</value>
+    <value>65, 20</value>
   </data>
   <data name="numericGraphicWidth.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -331,7 +334,7 @@
     <value>tableLayoutGraphicWidth</value>
   </data>
   <data name="&gt;&gt;numericGraphicWidth.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="lblGraphicWidthUnit.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -343,13 +346,13 @@
     <value>Microsoft Sans Serif, 9.75pt</value>
   </data>
   <data name="lblGraphicWidthUnit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>246, 6</value>
+    <value>174, 5</value>
   </data>
   <data name="lblGraphicWidthUnit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 6, 4, 0</value>
+    <value>3, 5, 3, 0</value>
   </data>
   <data name="lblGraphicWidthUnit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 37</value>
+    <value>53, 30</value>
   </data>
   <data name="lblGraphicWidthUnit.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -367,7 +370,7 @@
     <value>tableLayoutGraphicWidth</value>
   </data>
   <data name="&gt;&gt;lblGraphicWidthUnit.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="labelLanguage.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -379,13 +382,13 @@
     <value>Microsoft Sans Serif, 9.75pt</value>
   </data>
   <data name="labelLanguage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 49</value>
+    <value>3, 40</value>
   </data>
   <data name="labelLanguage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 6, 4, 4</value>
+    <value>3, 5, 3, 3</value>
   </data>
   <data name="labelLanguage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 33</value>
+    <value>94, 27</value>
   </data>
   <data name="labelLanguage.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -406,16 +409,16 @@
     <value>tableLayoutGraphicWidth</value>
   </data>
   <data name="&gt;&gt;labelLanguage.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="cboLanguage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 49</value>
+    <value>103, 40</value>
   </data>
   <data name="cboLanguage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 6, 4, 4</value>
+    <value>3, 5, 3, 3</value>
   </data>
   <data name="cboLanguage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 24</value>
+    <value>114, 21</value>
   </data>
   <data name="cboLanguage.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -430,22 +433,46 @@
     <value>tableLayoutGraphicWidth</value>
   </data>
   <data name="&gt;&gt;cboLanguage.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
+  </data>
+  <data name="cbSelectPage.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbSelectPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 73</value>
+  </data>
+  <data name="cbSelectPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 14</value>
+  </data>
+  <data name="cbSelectPage.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;cbSelectPage.Name" xml:space="preserve">
+    <value>cbSelectPage</value>
+  </data>
+  <data name="&gt;&gt;cbSelectPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbSelectPage.Parent" xml:space="preserve">
+    <value>tableLayoutGraphicWidth</value>
+  </data>
+  <data name="&gt;&gt;cbSelectPage.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="tableLayoutGraphicWidth.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="tableLayoutGraphicWidth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>318, 509</value>
+    <value>239, 415</value>
   </data>
   <data name="tableLayoutGraphicWidth.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 18, 4, 4</value>
+    <value>3, 15, 3, 3</value>
   </data>
   <data name="tableLayoutGraphicWidth.RowCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="tableLayoutGraphicWidth.Size" type="System.Drawing.Size, System.Drawing">
-    <value>307, 123</value>
+    <value>230, 100</value>
   </data>
   <data name="tableLayoutGraphicWidth.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -460,105 +487,99 @@
     <value>tableLayoutPanel</value>
   </data>
   <data name="&gt;&gt;tableLayoutGraphicWidth.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="tableLayoutGraphicWidth.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lblGraphicWidth" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="numericGraphicWidth" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="lblGraphicWidthUnit" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="labelLanguage" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="cboLanguage" Row="1" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,58,64197,Percent,41,35803,Absolute,64" /&gt;&lt;Rows Styles="Absolute,43,Absolute,43,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lblSelectPage" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lblGraphicWidth" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="numericGraphicWidth" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="lblGraphicWidthUnit" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="labelLanguage" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="cboLanguage" Row="1" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="cbSelectPage" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,58,64197,Percent,41,35803,Absolute,58" /&gt;&lt;Rows Styles="Absolute,35,Absolute,35,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <data name="radioBtnImportBoth.AutoSize" type="System.Boolean, mscorlib">
+  <data name="cbShape.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="radioBtnImportBoth.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="cbShape.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="radioBtnImportBoth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 78</value>
+  <data name="cbShape.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 63</value>
   </data>
-  <data name="radioBtnImportBoth.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+  <data name="cbShape.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 20</value>
   </data>
-  <data name="radioBtnImportBoth.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="cbShape.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="cbShape.Text" xml:space="preserve">
+    <value>Shape</value>
+  </data>
+  <data name="&gt;&gt;cbShape.Name" xml:space="preserve">
+    <value>cbShape</value>
+  </data>
+  <data name="&gt;&gt;cbShape.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbShape.Parent" xml:space="preserve">
+    <value>groupBoxImportOptions</value>
+  </data>
+  <data name="&gt;&gt;cbShape.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cbImage.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbImage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cbImage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 42</value>
+  </data>
+  <data name="cbImage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 20</value>
+  </data>
+  <data name="cbImage.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="cbImage.Text" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="&gt;&gt;cbImage.Name" xml:space="preserve">
+    <value>cbImage</value>
+  </data>
+  <data name="&gt;&gt;cbImage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbImage.Parent" xml:space="preserve">
+    <value>groupBoxImportOptions</value>
+  </data>
+  <data name="&gt;&gt;cbImage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cbText.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbText.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cbText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 21</value>
+  </data>
+  <data name="cbText.Size" type="System.Drawing.Size, System.Drawing">
     <value>52, 20</value>
   </data>
-  <data name="radioBtnImportBoth.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="cbText.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
-  <data name="radioBtnImportBoth.Text" xml:space="preserve">
-    <value>Both</value>
-  </data>
-  <data name="&gt;&gt;radioBtnImportBoth.Name" xml:space="preserve">
-    <value>radioBtnImportBoth</value>
-  </data>
-  <data name="&gt;&gt;radioBtnImportBoth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioBtnImportBoth.Parent" xml:space="preserve">
-    <value>groupBoxImportOptions</value>
-  </data>
-  <data name="&gt;&gt;radioBtnImportBoth.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="radioBtnImportGraphics.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioBtnImportGraphics.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioBtnImportGraphics.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 52</value>
-  </data>
-  <data name="radioBtnImportGraphics.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="radioBtnImportGraphics.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 20</value>
-  </data>
-  <data name="radioBtnImportGraphics.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="radioBtnImportGraphics.Text" xml:space="preserve">
-    <value>Graphics</value>
-  </data>
-  <data name="&gt;&gt;radioBtnImportGraphics.Name" xml:space="preserve">
-    <value>radioBtnImportGraphics</value>
-  </data>
-  <data name="&gt;&gt;radioBtnImportGraphics.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioBtnImportGraphics.Parent" xml:space="preserve">
-    <value>groupBoxImportOptions</value>
-  </data>
-  <data name="&gt;&gt;radioBtnImportGraphics.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="radioBtnImportText.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioBtnImportText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 26</value>
-  </data>
-  <data name="radioBtnImportText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="radioBtnImportText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 20</value>
-  </data>
-  <data name="radioBtnImportText.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="radioBtnImportText.Text" xml:space="preserve">
+  <data name="cbText.Text" xml:space="preserve">
     <value>Text</value>
   </data>
-  <data name="&gt;&gt;radioBtnImportText.Name" xml:space="preserve">
-    <value>radioBtnImportText</value>
+  <data name="&gt;&gt;cbText.Name" xml:space="preserve">
+    <value>cbText</value>
   </data>
-  <data name="&gt;&gt;radioBtnImportText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;cbText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;radioBtnImportText.Parent" xml:space="preserve">
+  <data name="&gt;&gt;cbText.Parent" xml:space="preserve">
     <value>groupBoxImportOptions</value>
   </data>
-  <data name="&gt;&gt;radioBtnImportText.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;cbText.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="groupBoxImportOptions.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -568,16 +589,10 @@
     <value>Microsoft Sans Serif, 9.75pt</value>
   </data>
   <data name="groupBoxImportOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 495</value>
-  </data>
-  <data name="groupBoxImportOptions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="groupBoxImportOptions.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>3, 403</value>
   </data>
   <data name="groupBoxImportOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>306, 137</value>
+    <value>230, 112</value>
   </data>
   <data name="groupBoxImportOptions.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -595,6 +610,111 @@
     <value>tableLayoutPanel</value>
   </data>
   <data name="&gt;&gt;groupBoxImportOptions.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btnSelectPages.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="btnSelectPages.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnSelectPages.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="btnSelectPages.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="btnSelectPages.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnSelectPages.Location" type="System.Drawing.Point, System.Drawing">
+    <value>111, 2</value>
+  </data>
+  <data name="btnSelectPages.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 5, 10, 5</value>
+  </data>
+  <data name="btnSelectPages.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 33</value>
+  </data>
+  <data name="btnSelectPages.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="btnSelectPages.Text" xml:space="preserve">
+    <value>Select pages</value>
+  </data>
+  <data name="&gt;&gt;btnSelectPages.Name" xml:space="preserve">
+    <value>btnSelectPages</value>
+  </data>
+  <data name="&gt;&gt;btnSelectPages.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnSelectPages.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;btnSelectPages.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnOk.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="btnOk.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnOk.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="btnOk.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="btnOk.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 2</value>
+  </data>
+  <data name="btnOk.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 5, 10, 5</value>
+  </data>
+  <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>99, 33</value>
+  </data>
+  <data name="btnOk.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="&gt;&gt;btnOk.Name" xml:space="preserve">
+    <value>btnOk</value>
+  </data>
+  <data name="&gt;&gt;btnOk.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnOk.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;btnOk.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 521</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>230, 37</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>tableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="tableLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -603,14 +723,11 @@
   <data name="tableLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="tableLayoutPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
   <data name="tableLayoutPanel.RowCount" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="tableLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>629, 690</value>
+    <value>472, 561</value>
   </data>
   <data name="tableLayoutPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -628,16 +745,16 @@
     <value>0</value>
   </data>
   <data name="tableLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="btnCancel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="lblInfo" Row="1" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="btnOk" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="rmTreeView" Row="0" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="tableLayoutGraphicWidth" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="groupBoxImportOptions" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,61,87515,Percent,15,34655,Percent,22,7783,Absolute,52" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="btnCancel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="lblInfo" Row="1" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="rmTreeView" Row="0" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="tableLayoutGraphicWidth" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="groupBoxImportOptions" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,61,87515,Percent,15,34655,Percent,22,7783,Absolute,42,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 16</value>
+    <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>629, 690</value>
+    <value>472, 561</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -925,9 +1042,6 @@
         /B//g//////8H/+D//////wf/4AAAAAAAB//gAAAAAAAH/+AAAAAAAAf/4AAAAAAAB//gAAAAAAAH///
         //////////////////////////////////////////////////8=
 </value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Download from reMarkable</value>

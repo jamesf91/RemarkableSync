@@ -100,13 +100,25 @@ namespace RemarkableSync
                 foreach (var entry in _docs)
                 {
                     var doc = entry.Value;
+                    long lngLastModified = Convert.ToInt64(doc.lastModified);
+                    if (!long.TryParse(doc.lastModified, out lngLastModified))
+                    {
+                        lngLastModified = 0;
+                    }
+                    long lngLastOpened;
+                    if(!long.TryParse(doc.lastOpened, out lngLastOpened))
+                    {
+                        lngLastOpened = 0;
+                    }
                     items.Add(new RmItem
                     {
                         ID = doc.DocumentID,
                         Version = doc.version,
                         Type = doc.type,
                         VissibleName = doc.visibleName,
-                        Parent = doc.parent
+                        Parent = doc.parent,
+                        LastModified = DateTimeOffset.FromUnixTimeMilliseconds(lngLastModified).DateTime,
+                        LastOpened = DateTimeOffset.FromUnixTimeMilliseconds(lngLastOpened).DateTime,
                     });
                 }
             }
@@ -270,6 +282,14 @@ namespace RemarkableSync
                         };
                         documentsToRead.Add(modifiedDoc);
                         docsModified++;
+
+                        //if file has been downloaded already, remove it
+                        //Todo: get path from local config?
+                        string docLocalPath = Path.Combine(Path.GetTempPath(), "RemarkableSync", newDocId);
+                        if (Directory.Exists(docLocalPath))
+                        {
+                            Directory.Delete(docLocalPath, true);
+                        }
                     }
 
                     oldDocs.Remove(newDocId);
@@ -322,7 +342,7 @@ namespace RemarkableSync
             BlobStream metadataBlobStream = await _httpHelper.GetBlobStreamFromHashAsync(docfiles[metadataDocId].Hash);
             try
             {
-                MetadataFile metadata = JsonSerializer.Deserialize<MetadataFile>(metadataBlobStream.Blob);
+                DocumentMetadata metadata = JsonSerializer.Deserialize<DocumentMetadata>(metadataBlobStream.Blob);
                 doc.visibleName = metadata.visibleName;
                 doc.type = metadata.type;
                 doc.parent = metadata.parent;
@@ -396,23 +416,5 @@ namespace RemarkableSync
         public int Subfiles { get; set; }
         public int Size { get; set; }
     }
-
-    class MetadataFile
-    {
-        public string visibleName { get; set; }
-        public string type { get; set; }
-        public string parent { get; set; }
-        public string lastModified { get; set; }
-        public string lastOpened { get; set; }
-        public int lastOpenedPage { get; set; }
-        public int version { get; set; }
-        public bool pinned { get; set; }
-        public bool synced { get; set; }
-        public bool modified { get; set; }
-        public bool deleted { get; set; }
-        public bool metadatamodified { get; set; }
-    }
-
-
 
 }

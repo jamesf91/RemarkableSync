@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace RemarkableSync.document
 {
@@ -20,6 +21,8 @@ namespace RemarkableSync.document
         public string BlobURLGet { get; set; }
         public DateTime BlobURLGetExpires { get; set; }
         public DateTime ModifiedClient { get; set; }
+        public DateTime LastModified { get; set; }
+        public DateTime LastOpened { get; set; }
         public string Type { get; set; }
         public string VissibleName { get; set; }
         public int CurrentPage { get; set; }
@@ -50,6 +53,43 @@ namespace RemarkableSync.document
                 }
             );
             return collection;
+        }
+
+        public static List<RmItem> SortItemsLastModified(List<RmItem> collection)
+        {
+            List<RmItem> expandedList = ExpandCollection(collection, "/");
+
+            expandedList.Sort(
+                delegate (RmItem p1, RmItem p2)
+                {
+                    int compareType = p2.LastModified.CompareTo(p1.LastModified);
+                    if (compareType == 0)
+                    {
+                        return p1.VissibleName.CompareTo(p2.VissibleName);
+                    }
+                    return compareType;
+                }
+            );
+            return expandedList;
+        }
+
+        private static List<RmItem> ExpandCollection(List<RmItem> collection, String parent)
+        {
+            List<RmItem> expandedList = new List<RmItem >();
+
+            foreach (RmItem item in collection)
+            {
+                item.Parent = parent;
+                if (item.Children.Count > 0)
+                {
+                    expandedList.AddRange(ExpandCollection(item.Children, item.VissibleName + "/"));
+                }
+                else
+                {
+                    expandedList.Add(item);
+                }
+            }
+            return expandedList;
         }
     }
 }

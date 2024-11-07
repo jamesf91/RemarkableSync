@@ -28,56 +28,92 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.ilPreviews = new System.Windows.Forms.ImageList(this.components);
-            this.lvPreviews = new System.Windows.Forms.ListView();
             this.btnOk = new System.Windows.Forms.Button();
+            this.flpPreviewContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.tbResizePreviews = new System.Windows.Forms.TrackBar();
+            this.btnCheckAll = new System.Windows.Forms.Button();
+            this.btnUncheckAll = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.tbResizePreviews)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ilPreviews
-            // 
-            this.ilPreviews.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.ilPreviews.ImageSize = new System.Drawing.Size(50, 50);
-            this.ilPreviews.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // lvPreviews
-            // 
-            this.lvPreviews.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvPreviews.HideSelection = false;
-            this.lvPreviews.Location = new System.Drawing.Point(0, 0);
-            this.lvPreviews.Name = "lvPreviews";
-            this.lvPreviews.Size = new System.Drawing.Size(998, 726);
-            this.lvPreviews.TabIndex = 0;
-            this.lvPreviews.UseCompatibleStateImageBehavior = false;
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(911, 691);
+            this.btnOk.Location = new System.Drawing.Point(529, 706);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(2);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.Size = new System.Drawing.Size(56, 19);
             this.btnOk.TabIndex = 1;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
+            // flpPreviewContainer
+            // 
+            this.flpPreviewContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flpPreviewContainer.AutoScroll = true;
+            this.flpPreviewContainer.Location = new System.Drawing.Point(0, 0);
+            this.flpPreviewContainer.Name = "flpPreviewContainer";
+            this.flpPreviewContainer.Size = new System.Drawing.Size(596, 701);
+            this.flpPreviewContainer.TabIndex = 3;
+            // 
+            // tbResizePreviews
+            // 
+            this.tbResizePreviews.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbResizePreviews.Location = new System.Drawing.Point(12, 706);
+            this.tbResizePreviews.Name = "tbResizePreviews";
+            this.tbResizePreviews.Size = new System.Drawing.Size(269, 45);
+            this.tbResizePreviews.TabIndex = 4;
+            this.tbResizePreviews.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // btnCheckAll
+            // 
+            this.btnCheckAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCheckAll.Location = new System.Drawing.Point(287, 707);
+            this.btnCheckAll.Name = "btnCheckAll";
+            this.btnCheckAll.Size = new System.Drawing.Size(75, 23);
+            this.btnCheckAll.TabIndex = 5;
+            this.btnCheckAll.Text = "Check all";
+            this.btnCheckAll.UseVisualStyleBackColor = true;
+            this.btnCheckAll.Click += new System.EventHandler(this.btnCheckAll_Click);
+            // 
+            // btnUncheckAll
+            // 
+            this.btnUncheckAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnUncheckAll.Location = new System.Drawing.Point(368, 707);
+            this.btnUncheckAll.Name = "btnUncheckAll";
+            this.btnUncheckAll.Size = new System.Drawing.Size(75, 23);
+            this.btnUncheckAll.TabIndex = 5;
+            this.btnUncheckAll.Text = "Uncheck all";
+            this.btnUncheckAll.UseVisualStyleBackColor = true;
+            this.btnUncheckAll.Click += new System.EventHandler(this.btnUncheckAll_Click);
+            // 
             // PreviewForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(998, 726);
+            this.ClientSize = new System.Drawing.Size(594, 735);
+            this.Controls.Add(this.btnUncheckAll);
+            this.Controls.Add(this.btnCheckAll);
+            this.Controls.Add(this.tbResizePreviews);
+            this.Controls.Add(this.flpPreviewContainer);
             this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.lvPreviews);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "PreviewForm";
             this.Text = "PreviewForm";
+            ((System.ComponentModel.ISupportInitialize)(this.tbResizePreviews)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ImageList ilPreviews;
-        private System.Windows.Forms.ListView lvPreviews;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.FlowLayoutPanel flpPreviewContainer;
+        private System.Windows.Forms.TrackBar tbResizePreviews;
+        private System.Windows.Forms.Button btnCheckAll;
+        private System.Windows.Forms.Button btnUncheckAll;
     }
 }

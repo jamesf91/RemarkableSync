@@ -99,7 +99,7 @@ namespace RemarkableSync
 
             while (true)
             {
-                Console.WriteLine("Enter a number to navigate to a subdirectory (or q to quit, r to restart):");
+                Console.WriteLine("Enter a number to navigate to a subdirectory (or q to quit, r to restart, m to sort by last modified):");
                 string input = Console.ReadLine();
                 int selection = 0;
 
@@ -114,6 +114,19 @@ namespace RemarkableSync
                     Console.Clear();
                     Console.WriteLine("Current Directory: {0}", currentPath);
                     PrintDirectory(currentSelection);
+                    continue;
+
+                }
+                if (input == "m")
+                {
+                    currentSelection = rootItems;
+                    currentSelection = RmItem.SortItemsLastModified(currentSelection);
+                    currentPath = "root";
+
+                    Console.Clear();
+                    Console.WriteLine("Current Directory: {0}", currentPath);
+
+                    PrintDirectoryByDate(currentSelection);
                     continue;
 
                 }
@@ -159,6 +172,17 @@ namespace RemarkableSync
                 {
                     Console.WriteLine("\t{0}. {1}", i + 1, collection[i].VissibleName);
                 }
+
+            }
+        }
+        
+        static void PrintDirectoryByDate(List<RmItem> collection)
+        {
+
+            Console.WriteLine("Top 50 By Last Modified:");
+            for (int i = 0; i < collection.Count && i < 50; i++)
+            {
+                Console.WriteLine("\t{0} - {1}{2}/", collection[i].LastModified.ToString("dd-MM-yyyy HH:mm"), collection[i].Parent, collection[i].VissibleName);
 
             }
         }

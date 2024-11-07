@@ -44,7 +44,9 @@ namespace RemarkableSync.document
         public TimestampedStringValue idx { get; set; }
         public TimestampedStringValue template { get; set; }
         public TimestampedStringValue scrollTime { get; set; }
-        public TimestampedIntValue verticalScroll { get; set; }
+        public TimestampedDoubleValue verticalScroll { get; set; }
+
+        public TimestampedIntValue redir { get; set; }
     }
 
     public class TimestampedStringValue
@@ -57,6 +59,12 @@ namespace RemarkableSync.document
     {
         public string timestamp { get; set; }
         public int value { get; set; }
+    }
+
+    public class TimestampedDoubleValue
+    {
+        public string timestamp { get; set; }
+        public double value { get; set; }
     }
 }
 

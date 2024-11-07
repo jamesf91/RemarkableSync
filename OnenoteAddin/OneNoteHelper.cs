@@ -1,4 +1,6 @@
 ﻿using Microsoft.Office.Interop.OneNote;
+using OneNoteObjectModel;
+using RemarkableSync.MyScript;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,134 +8,128 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
+using System.Windows.Ink;
+using System.Windows.Input;
 using System.Xml.Linq;
+using System.Xml.Serialization;
+using static System.Collections.Specialized.BitVector32;
 
 namespace RemarkableSync.OnenoteAddin
 {
-    public class OneNoteHelper
+    public class OneNoteHelper: OneNoteApplication
     {
-        static readonly List<string> PageObjectNames = new List<string>()
-        {
-            "Outline",
-            "Image",
-            "InkDrawing",
-            "InsertedFile",
-            "MediaFile",
-            "FutureObject"
-        };
-
         static private int PageXOffset = 36;
         static private int PageYOffset = 86;
         static private int ImageGap = 50;
         static private string PositionElementName = "Position";
         static private string SizeElementName = "Size";
 
-        private Application _application;
-        private XNamespace _ns;
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public OneNoteHelper(Application application)
+        public OneNoteHelper(Application application): base(application)
         {
-            _application = application;
-            GetNamespace();
         }
 
         public string GetCurrentNotebookId()
         {
+            return GetCurrentNotebook()?.ID ?? null;
+        }
+
+        private Notebook GetCurrentNotebook()
+        {
             string xmlHierarchy;
-            _application.GetHierarchy(null, HierarchyScope.hsNotebooks, out xmlHierarchy, XMLSchema.xs2013);
 
-            XDocument hierachyDocument = XDocument.Parse(xmlHierarchy);
-            var currentNoteBooks = from notebookNode in hierachyDocument.Descendants(_ns + "Notebook")
-                                   where notebookNode.Attribute("isCurrentlyViewed")?.Value == "true"
-                                   select notebookNode;
+            var notebooks = GetNotebooks();
+            if (notebooks.Notebook.Length > 0)
+            {
+                var currentNoteBooks = from notebookNode in notebooks.Notebook
+                                       where notebookNode.isCurrentlyViewed
+                                       select notebookNode;
+                return currentNoteBooks?.ElementAt(0) ?? null;
+            }
 
-            if (currentNoteBooks.Count() > 0)
-            {
-                return currentNoteBooks.ElementAt(0).Attribute("ID")?.Value ?? null;
+            Logger.Debug("No notebook found as current");
+            return null;
+        }
+
+        private OneNoteObjectModel.Section GetCurrentSection()
+        {
+            Notebook notebook = GetCurrentNotebook();
+            
+            if(notebook != null) { 
+                notebook.Section = GetSections(notebook)?.ToArray();
+                if (notebook.Section?.Length > 0)
+                {
+                    var currentSection = from sectionNode in notebook.Section
+                                         where sectionNode.isCurrentlyViewed
+                                         select sectionNode;
+
+                    return currentSection?.ElementAt(0) ?? null;
+                }
             }
-            else
-            {
-                Logger.Debug("No notebook found as current");
-                return null;
-            }
+            
+
+            Logger.Debug("No section found as current");
+            return null;
         }
 
         public string GetCurrentSectionId()
         {
-            string currentNoteBookId = GetCurrentNotebookId();
-            if (currentNoteBookId == null)
-            {
-                return null;
-            }
-
-            string xmlHierarchy;
-            _application.GetHierarchy(currentNoteBookId, HierarchyScope.hsSections, out xmlHierarchy, XMLSchema.xs2013);
-
-            XDocument hierachyDocument = XDocument.Parse(xmlHierarchy);
-            var currentSection = from sectionNode in hierachyDocument.Descendants(_ns + "Section")
-                                 where sectionNode.Attribute("isCurrentlyViewed")?.Value == "true"
-                                 select sectionNode;
-
-            if (currentSection.Count() > 0)
-            {
-                return currentSection.ElementAt(0).Attribute("ID")?.Value ?? null;
-            }
-            else
-            {
-                Logger.Debug("No section found as current");
-                return null;
-            }
+            return GetCurrentSection()?.ID ?? null;
         }
 
-        public string CreatePage(string sectionId, string pageName)
+        public Page AddPageAfterCurrent(string name)
+        {
+            return CreatePage(GetCurrentSectionId(), name);
+        }
+
+        public Page CreatePage(string sectionId, string pageName)
         {
             // Create the new page
-            string pageId;
-            _application.CreateNewPage(sectionId, out pageId, NewPageStyle.npsBlankPageWithTitle);
-
-            string xml;
-            _application.GetPageContent(pageId, out xml, PageInfo.piAll, XMLSchema.xs2013);
-            var doc = XDocument.Parse(xml);
-            var title = doc.Descendants(_ns + "T").First();
-            title.Value = pageName;
-
-            // Update the page
-            _application.UpdatePageContent(doc.ToString(), DateTime.MinValue, XMLSchema.xs2013);
-            return pageId;
+            string pageId = String.Empty;
+            InteropApplication.CreateNewPage(sectionId, out pageId);
+            var page = GetPageContent(pageId);
+            (page.Title.OE.First().Items.First() as TextRange).Value = pageName;
+            return UpdatePage(page);
         }
 
         public void AddPageContent(string pageId, string content)
         {
             string xml;
-            _application.GetPageContent(pageId, out xml, PageInfo.piAll, XMLSchema.xs2013);
-            var doc = XDocument.Parse(xml);
-            var ns = doc.Root.Name.Namespace;
+            Page p = GetPageContent(pageId);
+           
 
+            List<OE> oeChildren = new List<OE>();
             var contentLines = content.Split('\n').ToList();
-            XElement newOutline = new XElement(ns + "Outline");
-            XElement oeChildren = new XElement(ns + "OEChildren");
-
             foreach (string contentLine in contentLines)
             {
-                XElement oe = new XElement(ns + "OE");
-                XElement t = new XElement(ns + "T");
-                t.Add(new XCData(contentLine));
-                oe.Add(t);
-                oeChildren.Add(oe);
-            }
+                TextRange t = new TextRange { Value = contentLine };
 
-            newOutline.Add(oeChildren);
-            doc.Root.Add(newOutline);
+                OE outlineElement = new OE { 
+                    Items = new TextRange[] { t } 
+                };
+                oeChildren.Add(outlineElement);
+            }
+            
+            Outline o = new Outline { 
+                OEChildren = new OEChildren[] {
+                    new OEChildren {
+                        Items = oeChildren.ToArray() 
+                    }
+                } 
+            };
+            p.Items = new PageObject[] { o };
 
             // Update the page
-            _application.UpdatePageContent(doc.ToString(), DateTime.MinValue, XMLSchema.xs2013);
+            UpdatePage(p);
         }
 
         public void AppendPageImages(string pageId, List<Bitmap> images, double zoom = 1.0)
         {
             string xml;
-            _application.GetPageContent(pageId, out xml, PageInfo.piAll, XMLSchema.xs2013);
+            InteropApplication.GetPageContent(pageId, out xml, PageInfo.piAll, XMLSchema.xs2013);
             var pageDoc = XDocument.Parse(xml);
 
             int yPos = GetBottomContentYPos(pageDoc);
@@ -143,19 +139,74 @@ namespace RemarkableSync.OnenoteAddin
                 yPos = AppendImage(pageDoc, image, zoom, yPos) + ImageGap;
             }
 
-            _application.UpdatePageContent(pageDoc.ToString(), DateTime.MinValue, XMLSchema.xs2013);
+            InteropApplication.UpdatePageContent(pageDoc.ToString(), DateTime.MinValue, XMLSchema.xs2013);
         }
 
+        public void AppendPageShapeFromMyScriptRequest(string pageId, HwrRequestBundle bundle, double zoom = 1.0)
+        {
+            OneNoteApplication oneNote = new OneNoteApplication(InteropApplication);
+            Page p = oneNote.GetPageContent(pageId);
+            if (p.Items == null)
+            {
+                p.Items = new PageObject[1];
+            }
+            int yPos = GetBottomContentYPos(p);
+            int maxX = 0;
+            int maxY = 0;
+
+            foreach (var strokeGroup in bundle.Request.strokeGroups)
+            {
+
+                StrokeCollection strokes = new StrokeCollection();
+                foreach (var stroke in strokeGroup.strokes)
+                {
+                    StylusPointCollection points = new StylusPointCollection();
+                    for (int i = 0; i < stroke.x.Length; i++)
+                    {
+                        points.Add(new StylusPoint(stroke.x[i], stroke.y[i]));
+                        maxX = Math.Max(maxX, stroke.x[i]);
+                        maxY = Math.Max(maxY, stroke.y[i]);
+                    }
+                    strokes.Add(new System.Windows.Ink.Stroke(points));
+                }
+
+                MemoryStream ms = new MemoryStream();
+                strokes.Save(ms);
+
+                InkDrawing drawing = new InkDrawing();
+                drawing.Position = new Position();
+                drawing.Position.x = 0;
+                drawing.Position.y = yPos;
+
+                drawing.Size = new OneNoteObjectModel.Size();
+                drawing.Size.width = (int)Math.Round(maxX * zoom);
+                drawing.Size.height = (int)Math.Round(maxY * zoom);
+
+                drawing.Item = ms.ToArray();
+                p.Items[0] = drawing;
+            }
+            try
+            {
+                String test = OneNoteApplication.XMLSerialize(p);
+                oneNote.UpdatePage(p);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                throw ex;
+            }
+        }
+       
         public void AppendPageImage(string pageId, Bitmap image, double zoom = 1.0)
         {
             string xml;
-            _application.GetPageContent(pageId, out xml, PageInfo.piAll, XMLSchema.xs2013);
+            InteropApplication.GetPageContent(pageId, out xml, PageInfo.piAll, XMLSchema.xs2013);
             var pageDoc = XDocument.Parse(xml);
 
             int yPos = GetBottomContentYPos(pageDoc);
             AppendImage(pageDoc, image, zoom, yPos);
 
-            _application.UpdatePageContent(pageDoc.ToString(), DateTime.MinValue, XMLSchema.xs2013);
+            InteropApplication.UpdatePageContent(pageDoc.ToString(), DateTime.MinValue, XMLSchema.xs2013);
         }
 
         private int AppendImage(XDocument pageDoc, Bitmap bitmap, double zoom, int yPos)
@@ -187,13 +238,33 @@ namespace RemarkableSync.OnenoteAddin
             return (yPos + height);
         }
 
-        private void GetNamespace()
+        private int GetBottomContentYPos(Page page)
         {
-            string xml;
-            _application.GetHierarchy(null, HierarchyScope.hsNotebooks, out xml);
+            int lowestYPos = PageYOffset;
+            if(page.Items == null)
+            {
+                return lowestYPos;
+            }
+            foreach (var item in page.Items)
+            {
+                if (item == null || item.Position == null || item.Size == null)
+                {
+                    continue;
+                }
 
-            var doc = XDocument.Parse(xml);
-            _ns = doc.Root.Name.Namespace;
+                try
+                {
+                    int yPos = (int)item.Position.y;;
+                    int height = (int)item.Size.height;
+                    lowestYPos = Math.Max(lowestYPos, (yPos + height));
+                }
+                catch (Exception err)
+                {
+                    Logger.Error($"error: {err.Message}");
+                    continue;
+                }
+            }
+            return lowestYPos;
         }
 
         private int GetBottomContentYPos(XDocument pageDoc)

@@ -1,8 +1,11 @@
-﻿using System;
+﻿using NLog;
+using RemarkableSync.document;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,6 +24,14 @@ namespace RemarkableSync
 
             try
             {
+                //check if file exists and if newer version is available
+                if(File.Exists(GetDocumentMetadataFilePath()))
+                {
+                    //DocumentMetadata metadata = JsonSerializer.Deserialize<DocumentMetadata>(File.ReadAllText(GetDocumentMetadataFilePath()));
+
+                }
+                
+
                 // find and download <id>.content file first to get page mapping
                 var contentDocFile = fileList.FirstOrDefault(docfile => docfile.DocumentID == (id + ".content"));
                 if (contentDocFile == null)
@@ -29,7 +40,7 @@ namespace RemarkableSync
                 }
 
                 progress.Report($"Getting page info for document...");
-                if (!DownloadFile(contentDocFile, 0, progress).Result)
+                if (!DownloadFile(contentDocFile, 0, progress, true).Result)
                 {
                     throw new Exception("Could not load file contents");
 
@@ -79,7 +90,7 @@ namespace RemarkableSync
             LoadDocumentContent();
         }
 
-        private async Task<bool> DownloadFile(DocFile file, int totalFileCount, IProgress<string> progress)
+        private async Task<bool> DownloadFile(DocFile file, int totalFileCount, IProgress<string> progress, bool force = false)
         {
             string dir = _root_path;
             string filename = file.DocumentID;
@@ -96,17 +107,24 @@ namespace RemarkableSync
             Directory.CreateDirectory(dir);
             string fullPathFilename = Path.Combine(dir, filename);
 
-            Stream stream = await _httpHelper.GetStreamFromHashAsync(file.Hash);
-            if (stream == null)
+            if(!force && File.Exists(fullPathFilename))
             {
-                Logger.Debug($"Downloading file: {file.DocumentID}, hash: {file.Hash} - returned null stream");
-                return false;
+                Logger.Debug($"File already downloaded, reusing");
             }
+            else
+            {
+                Stream stream = await _httpHelper.GetStreamFromHashAsync(file.Hash);
+                if (stream == null)
+                {
+                    Logger.Debug($"Downloading file: {file.DocumentID}, hash: {file.Hash} - returned null stream");
+                    return false;
+                }
 
-            var fileStream = File.Create(fullPathFilename);
-            stream.Seek(0, SeekOrigin.Begin);
-            stream.CopyTo(fileStream);
-            fileStream.Close();
+                var fileStream = File.Create(fullPathFilename);
+                stream.Seek(0, SeekOrigin.Begin);
+                stream.CopyTo(fileStream);
+                fileStream.Close();
+            }
 
             if (totalFileCount > 0)
             {
@@ -121,5 +139,5 @@ namespace RemarkableSync
             Logger.Debug($"Downloading file: {file.DocumentID}, hash: {file.Hash} - Finished");
             return true;
         }
-    }
+    }    
 }
