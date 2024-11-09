@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -262,22 +261,5 @@ namespace RemarkableSync
                 throw new Exception("Unable to determine cloud API version");
             }
         }
-
-        /*private string getLocalFilePath(string documentId)
-        {
-            string dir = _root_path;
-            string filename = documentId;
-
-            if (filename.Contains("/"))
-            {
-                // change to windows path notation
-                filename = filename.Replace('/', '\\');
-                dir = Path.Combine(dir, Path.GetDirectoryName(filename));
-                filename = Path.GetFileName(filename);
-            }
-
-            Directory.CreateDirectory(dir);
-            return Path.Combine(dir, filename);
-        }*/
     }
 }
